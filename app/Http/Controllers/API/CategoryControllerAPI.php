@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
+use Illuminate\Support\Facades\Response;
 
 class CategoryControllerAPI extends Controller
 {
@@ -17,7 +18,7 @@ class CategoryControllerAPI extends Controller
      */
     public function index()
     {
-        return CategoryResource::collection(c::all());
+        return CategoryResource::collection(Category::all());
     }
 
     /**
@@ -39,7 +40,7 @@ class CategoryControllerAPI extends Controller
     public function store(CategoryRequest $request)
     {
         Category::create($request->validated());
-        return CategoryResource::collection(Category::all());
+        return Response::json(['message' => ['text' => 'Category Inserted Successfully', 'status' => 'success']]);
     }
 
     /**
@@ -74,7 +75,7 @@ class CategoryControllerAPI extends Controller
     public function update(CategoryRequest $request, Category $category, $id)
     {
         $category = Category::where('id', $id)->update($request->validated());
-        return CategoryResource::collection(Category::all());
+        return Response::json(['message' => ['text' => 'Category Updated Successfully', 'status' => 'success']]);
     }
 
     /**
@@ -83,8 +84,9 @@ class CategoryControllerAPI extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category, $id)
     {
-        //
+        Category::where('id', $id)->delete();
+        return Response::json(['message' => ['text' => 'Category Delete Successfully', 'status' => 'success']]);
     }
 }

@@ -24,3 +24,5 @@ Route::get('/v1/category/{id}', [CategoryControllerAPI::class, 'show']);
 Route::get('/v1/category/{id}/edit', [CategoryControllerAPI::class, 'edit']);
 Route::post('/v1/category/create', [CategoryControllerAPI::class, 'store']);
 Route::post('/v1/category/{id}/update', [CategoryControllerAPI::class, 'update']);
+Route::delete('/v1/category/{id}/delete', [CategoryControllerAPI::class, 'destroy']);
+

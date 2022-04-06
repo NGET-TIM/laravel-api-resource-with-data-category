@@ -24,13 +24,14 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => ['required', 'string'],
+            'code' => ['required', 'string', 'unique:category,code'],
             'name' => ['required', 'string'],
         ];
     }
     public function messages() {
         return [
             'code.required' => 'Category code is required',
+            'code.unique' => 'Category code is already exist',
             'name.required' => 'Category name is required',
         ];
     }
