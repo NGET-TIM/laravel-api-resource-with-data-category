@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\c;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 
 class CategoryControllerAPI extends Controller
@@ -35,52 +36,54 @@ class CategoryControllerAPI extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        Category::create($request->validated());
+        return CategoryResource::collection(Category::all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\c  $c
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(c $c, $id)
+    public function show(Category $category, $id)
     {
-        return CategoryResource::collection($c::where('id', $id)->get());
+        return CategoryResource::collection(Category::where('id', $id)->get());
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\c  $c
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(c $c, $id)
+    public function edit(Category $category, $id)
     {
-        return CategoryResource::collection($c::where('id', $id)->get());
+        return CategoryResource::collection($category::where('id', $id)->get());
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\c  $c
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, c $c)
+    public function update(CategoryRequest $request, Category $category, $id)
     {
-        //
+        $category = Category::where('id', $id)->update($request->validated());
+        return CategoryResource::collection(Category::all());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\c  $c
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(c $c)
+    public function destroy(Category $category)
     {
         //
     }
